@@ -44,12 +44,12 @@ Los datos de exploración geológica de las tres regiones se almacenan en archiv
 1. Descarga y prepara los datos. Explica el procedimiento.
 
 2. Entrena y prueba el modelo para cada región en geo_data_0.csv:
-      <ol type="1">
+   <ol type="1">
      <li>Divide los datos en un conjunto de entrenamiento y un conjunto de validación en una proporción de 75:25</li>
      <li>Entrena el modelo y haz predicciones para el conjunto de validación.</li>
      <li>Guarda las predicciones y las respuestas correctas para el conjunto de validación.</li>
      <li>Muestra el volumen medio de reservas predicho y RMSE del modelo.</li>
-     <li>Analiza los resultados.</il>
+     <li>Analiza los resultados.</li>
      <li>Coloca todos los pasos previos en funciones, realiza y ejecuta los pasos 2.1-2.5 para los archivos 'geo_data_1.csv' y 'geo_data_2.csv'.
 </li>
    </ol>
@@ -74,4 +74,3 @@ Los datos de exploración geológica de las tres regiones se almacenan en archiv
      <li>Encuentra el beneficio promedio, el intervalo de confianza del 95% y el riesgo de pérdidas. La pérdida es una ganancia negativa, calcúlala como una probabilidad y luego exprésala como un porcentaje.</li>
      <li>Presenta tus conclusiones: propón una región para el desarrollo de pozos petrolíferos y justifica tu elección. ¿Coincide tu elección con la elección anterior en el punto 4.3?</li>
    </ol>
-    
