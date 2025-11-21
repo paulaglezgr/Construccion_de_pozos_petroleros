@@ -1,76 +1,47 @@
-# Construcción de pozos petroleros
+# Predicción de reservas petroleras y evaluación de rentabilidad
 
-## Descripción del proyecto
+Desarrollo de un sistema de selección de pozos petrolíferos basado en predicciones de reservas y análisis de riesgo. Con datos geológicos sintéticos de tres regiones, se entrena un modelo de Regresión Lineal para estimar el volumen de petróleo en nuevos pozos, se calcula la ganancia esperada para los 200 pozos más prometedores y se evalúa el riesgo asociado mediante bootstrapping.
 
-Trabajas en la compañía de extracción de petróleo OilyGiant. Tu tarea es encontrar los mejores lugares donde abrir 200 pozos nuevos de petróleo.
+## 🎯 Objetivos
 
-Para completar esta tarea, tendrás que realizar los siguientes pasos:
+* Predecir el volumen de reservas de nuevos pozos.
+* Seleccionar los mejores 200 pozos por región según su volumen estimado.
+* Determinar cuál región genera mayor beneficio económico.
+* Evaluar riesgos y estabilidad usando bootstrapping (1,000 muestras, 95% CI).
 
-* Leer los archivos con los parámetros recogidos de pozos petrolíferos en la región seleccionada: calidad de crudo y volumen de reservas.
-* Crear un modelo para predecir el volumen de reservas en pozos nuevos.
-* Elegir los pozos petrolíferos que tienen los valores estimados más altos.
-* Elegir la región con el beneficio total más alto para los pozos petrolíferos seleccionados.
-
-Tienes datos sobre muestras de crudo de tres regiones. Ya se conocen los parámetros de cada pozo petrolero de la región. Crea un modelo que ayude a elegir la región con el mayor margen de beneficio. Analiza los beneficios y riesgos potenciales utilizando la técnica bootstrapping.
-
-
-**CONDICIONES**
-
-* Solo se debe usar la regresión lineal para el entrenamiento del modelo.
-* Al explorar la región, se lleva a cabo un estudio de 500 puntos con la selección de los mejores 200 puntos para el cálculo del beneficio.
-* El presupuesto para el desarrollo de 200 pozos petroleros es de 100 millones de dólares.
-* Un barril de materias primas genera 4.5 USD de ingresos. El ingreso de una unidad de producto es de 4500 dólares (el volumen de reservas está expresado en miles de barriles).
-* Después de la evaluación de riesgo, mantén solo las regiones con riesgo de pérdidas inferior al 2.5%. De las que se ajustan a los criterios, se debe seleccionar la región con el beneficio promedio más alto.
-
-Los datos son sintéticos: los detalles del contrato y las características del pozo no se publican.
-
-### Descripción de datos
-
-Los datos de exploración geológica de las tres regiones se almacenan en archivos:
+## 🗂️ Datos
 
 * `/datasets/geo_data_0.csv`
 * `/datasets/geo_data_1.csv`
 * `/datasets/geo_data_2.csv`
+
+* `id` – identificador del pozo
+* `f0`, `f1`, `f2` – características numéricas
+
+## Metodología
+* Preparación de datos
+  * División train/test (75/25)
+  * Escalado de características (StandardScaler)
+
+* Entrenamiento del modelo
+  * Regresión Lineal
+  * Cálculo de RMSE y volumen promedio predicho por región
+
+* Cálculo de beneficios
+  * Selección de los 200 pozos con mayor volumen estimado
+  * Evaluación de ingresos considerando:
+    * $100M de inversión
+    * $4,500 por unidad (1 mil barriles)
+
+* Bootstrapping
+  * 1,000 muestras por región
+  * Intervalos de confianza del 95%
+  * Cálculo de riesgo de pérdida
+
+
+## 🧾 Conclusión
+
+Aunque la región 0 muestra mayores ganancias iniciales, el análisis de riesgo mediante bootstrapping indica que la Región 1 es la única con riesgo inferior a 2.5%, lo que la convierte en la apuesta más segura y rentable bajo las condiciones del proyecto.
+Los datos de exploración geológica de las tres regiones se almacenan en archivos:
+
   
-**Características**
-* `id` — identificador único de pozo de petróleo
-* `f0`, `f1`, `f2` — tres características de los puntos (su significado específico no es importante, pero las características en sí son significativas)
-
-**Objetivo**
-* `product` — volumen de reservas en el pozo de petróleo (miles de barriles).
-
-## Instrucciones del proyecto
-
-1. Descarga y prepara los datos. Explica el procedimiento.
-
-2. Entrena y prueba el modelo para cada región en geo_data_0.csv:
-   <ol type="1">
-     <li>Divide los datos en un conjunto de entrenamiento y un conjunto de validación en una proporción de 75:25</li>
-     <li>Entrena el modelo y haz predicciones para el conjunto de validación.</li>
-     <li>Guarda las predicciones y las respuestas correctas para el conjunto de validación.</li>
-     <li>Muestra el volumen medio de reservas predicho y RMSE del modelo.</li>
-     <li>Analiza los resultados.</li>
-     <li>Coloca todos los pasos previos en funciones, realiza y ejecuta los pasos 2.1-2.5 para los archivos 'geo_data_1.csv' y 'geo_data_2.csv'.
-</li>
-   </ol>
-
-3. Prepárate para el cálculo de ganancias:
-   <ol type="1">
-     <li>Almacena todos los valores necesarios para los cálculos en variables separadas.</li>
-     <li>Dada la inversión de 100 millones por 200 pozos petrolíferos, de media un pozo petrolífero debe producir al menos un valor de 500,000 dólares en unidades para evitar pérdidas (esto es equivalente a 111.1 unidades). Compara esta cantidad con la cantidad media de reservas en cada región.</li>
-     <li>Presenta conclusiones sobre cómo preparar el paso para calcular el beneficio.</li>
-   </ol>
-
-4. Escribe una función para calcular la ganancia de un conjunto de pozos de petróleo seleccionados y modela las predicciones:
-   <ol type="1">
-     <li>Elige los 200 pozos con los valores de predicción más altos de cada una de las 3 regiones (es decir, archivos 'csv').</li>
-     <li>Resume el volumen objetivo de reservas según dichas predicciones. Almacena las predicciones para los 200 pozos para cada una de las 3 regiones.</li>
-     <li>Calcula la ganancia potencial de los 200 pozos principales por región. Presenta tus conclusiones: propón una región para el desarrollo de pozos petrolíferos y justifica tu elección.</li>
-   </ol>
-  
-5. Calcula riesgos y ganancias para cada región:
-   <ol type="1">
-     <li>Utilizando las predicciones que almacenaste en el paso 4.2, emplea la técnica del bootstrapping con 1000 muestras para hallar la distribución de los beneficios.</li>
-     <li>Encuentra el beneficio promedio, el intervalo de confianza del 95% y el riesgo de pérdidas. La pérdida es una ganancia negativa, calcúlala como una probabilidad y luego exprésala como un porcentaje.</li>
-     <li>Presenta tus conclusiones: propón una región para el desarrollo de pozos petrolíferos y justifica tu elección. ¿Coincide tu elección con la elección anterior en el punto 4.3?</li>
-   </ol>
